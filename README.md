@@ -216,6 +216,13 @@ npm start
 
 Use a process manager (PM2, systemd) and terminate TLS at a reverse proxy; store secrets in a vault, not in the repo.
 
+### Deploying the client on Vercel
+
+1. In the Vercel project, set **Root Directory** to `client` (this repo is a monorepo-style layout).
+2. Add **`NEXT_PUBLIC_API_URL`** under **Environment Variables** (e.g. `https://your-api.example.com/api`). The browser calls this URL at runtime; the build does not need the API to be reachable.
+3. Use the default **Framework Preset: Next.js** and build command **`npm run build`**. Do **not** enable **Static HTML Export** / **`output: 'export'`** for this app — the root layout uses **`dynamic = 'force-dynamic'`** so routes are server-rendered on demand, which avoids the “Export encountered errors on following paths” failure that happens when Vercel tries to export a static site from a client-heavy App Router project.
+4. Deploy the Express API separately (Railway, Render, Fly.io, VPS, etc.) and point `NEXT_PUBLIC_API_URL` at it; configure **`CLIENT_ORIGIN`** on the API to your Vercel domain for CORS.
+
 ---
 
 ## Security notes

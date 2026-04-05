@@ -71,7 +71,7 @@ export default function RecordsPage() {
   }
 
   async function onDelete(id) {
-    if (!window.confirm("Delete this record?")) return;
+    if (typeof window !== "undefined" && !window.confirm("Delete this record?")) return;
     setError("");
     try {
       await api(`/records/${id}`, { method: "DELETE" });

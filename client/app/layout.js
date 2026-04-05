@@ -1,6 +1,8 @@
 import "./globals.css";
-import { Providers } from "@/components/Providers";
-import { Starfield } from "@/components/Starfield";
+import { ClientRoot } from "@/components/ClientRoot";
+
+// Entire app is client-auth driven; force dynamic so Vercel does not treat routes as pure static export.
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Finance Dashboard",
@@ -11,10 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Starfield />
-        <div className="page-layer">
-          <Providers>{children}</Providers>
-        </div>
+        <ClientRoot>{children}</ClientRoot>
       </body>
     </html>
   );
